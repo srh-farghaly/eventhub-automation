@@ -1,0 +1,9 @@
+
+# Playwright
+node_modules/
+.env
+auth-states/*
+!auth-states/.gitkeep
+playwright-report/
+test-results/
+reports/
