@@ -1,8 +1,8 @@
 import { expect, Page, test } from '@playwright/test';
-import { ApiEvent } from '../api/models/types';
+import { ApiEvent } from '../features/events/types';
+import { EventsPage } from '../features/events/EventsPage';
 import { BookingFormPage } from '../pages/BookingFormPage';
 import { ConfirmationPage } from '../pages/ConfirmationPage';
-import { EventsPage } from '../pages/EventsPage';
 import { MyBookingsPage } from '../pages/MyBookingsPage';
 import { parseMoney } from '../utils/money';
 

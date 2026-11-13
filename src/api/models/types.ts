@@ -4,18 +4,6 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-export interface ApiEvent {
-  id: number;
-  title: string;
-  category: string;
-  venue: string;
-  city: string;
-  eventDate: string; 
-  price: string; 
-  totalSeats: number;
-  availableSeats: number;
-}
-
 export interface BookingRequest {
   eventId: number;
   customerName: string;
