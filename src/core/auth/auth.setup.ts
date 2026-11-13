@@ -1,5 +1,5 @@
 import { test as setup } from '@playwright/test';
-import { AuthApi } from '../api/AuthApi';
+import { AuthApi } from './AuthApi';
 import { env } from '../config/env';
 import { saveSession } from './session';
 

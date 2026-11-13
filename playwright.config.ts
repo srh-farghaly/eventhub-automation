@@ -1,6 +1,6 @@
 import { defineConfig, devices, type ReporterDescription } from '@playwright/test';  
-import { env } from './src/config/env';
-import { AUTH_FILE } from './src/auth/session';
+import { env } from './src/core/config/env';
+import { AUTH_FILE } from './src/core/auth/session';
 
 const reporters: ReporterDescription[] = process.env.CI
   ? [
@@ -34,7 +34,7 @@ export default defineConfig({
   projects: [
     {
       name: 'setup',
-      testDir: './src/auth',
+      testDir: './src/core/auth',
       testMatch: '**/*.setup.ts',
       use: { baseURL: env.apiBaseUrl },
     },

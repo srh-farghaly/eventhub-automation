@@ -1,6 +1,6 @@
 import { test as base, APIRequestContext } from '@playwright/test';
-import { env } from '../config/env';
-import { readToken } from '../auth/session';
+import { env } from '../core/config/env';
+import { readToken } from '../core/auth/session';
 import { EventsApi } from '../api/EventsApi';
 import { BookingsApi } from '../api/BookingsApi';
 import { BookingFacade } from '../facades/BookingFacade';
