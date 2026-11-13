@@ -1,5 +1,5 @@
 import { test, expect } from '../../src/fixtures';
-import { buildBookingRequest } from '../../src/utils/bookingData';
+import { buildBookingRequest } from '../../src/features/bookings/bookingData';
 
 test('AC5: booking via API returns a confirmed booking with a reference', async ({
   eventsApi,

@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { BookingRequest } from '../api/models/types';
+import { BookingRequest } from './types';
 
 export function buildBookingRequest(
   eventId: number,

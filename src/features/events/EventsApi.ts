@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { ApiResponse } from '../../api/models/types';
+import { ApiResponse } from '../../core/api/types';
 import { ApiEvent } from './types';
 
 export class EventsApi {

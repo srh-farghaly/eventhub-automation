@@ -1,5 +1,5 @@
 import { test } from '../../src/fixtures';
-import { buildBookingRequest } from '../../src/utils/bookingData';
+import { buildBookingRequest } from '../../src/features/bookings/bookingData';
 
 test.describe('US-114: Book tickets for an event', () => {
   test('AC2: the total on the form is price x number of tickets', async ({

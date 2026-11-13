@@ -1,9 +1,3 @@
-export interface ApiResponse<T> {
-  success: boolean;
-  data: T;
-  message?: string;
-}
-
 export interface BookingRequest {
   eventId: number;
   customerName: string;
@@ -19,7 +13,7 @@ export interface Booking {
   customerEmail: string;
   customerPhone: string;
   quantity: number;
-  totalPrice: string; 
+  totalPrice: string;
   status: string;
   bookingRef: string;
   createdAt: string;

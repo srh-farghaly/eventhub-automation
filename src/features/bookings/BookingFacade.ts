@@ -1,10 +1,10 @@
 import { expect, Page, test } from '@playwright/test';
-import { ApiEvent } from '../features/events/types';
-import { EventsPage } from '../features/events/EventsPage';
-import { BookingFormPage } from '../pages/BookingFormPage';
-import { ConfirmationPage } from '../pages/ConfirmationPage';
-import { MyBookingsPage } from '../pages/MyBookingsPage';
-import { parseMoney } from '../utils/money';
+import { ApiEvent } from '../events/types';
+import { EventsPage } from '../events/EventsPage';
+import { BookingFormPage } from './pages/BookingFormPage';
+import { ConfirmationPage } from './pages/ConfirmationPage';
+import { MyBookingsPage } from './pages/MyBookingsPage';
+import { parseMoney } from './money';
 
 export interface BookingDetails {
   customerName: string;

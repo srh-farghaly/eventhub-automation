@@ -2,12 +2,12 @@ import { test as base, APIRequestContext } from '@playwright/test';
 import { env } from '../core/config/env';
 import { readToken } from '../core/auth/session';
 import { EventsApi } from '../features/events/EventsApi';
-import { BookingsApi } from '../api/BookingsApi';
-import { BookingFacade } from '../facades/BookingFacade';
-import { BookingFormPage } from '../pages/BookingFormPage';
-import { ConfirmationPage } from '../pages/ConfirmationPage';
+import { BookingsApi } from '../features/bookings/BookingsApi';
+import { BookingFacade } from '../features/bookings/BookingFacade';
+import { BookingFormPage } from '../features/bookings/pages/BookingFormPage';
+import { ConfirmationPage } from '../features/bookings/pages/ConfirmationPage';
 import { EventsPage } from '../features/events/EventsPage';
-import { MyBookingsPage } from '../pages/MyBookingsPage';
+import { MyBookingsPage } from '../features/bookings/pages/MyBookingsPage';
 
 type Fixtures = {
   api: APIRequestContext;

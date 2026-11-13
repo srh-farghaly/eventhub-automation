@@ -1,5 +1,6 @@
 import { APIRequestContext, APIResponse } from '@playwright/test';
-import { ApiResponse, Booking, BookingRequest } from './models/types';
+import { ApiResponse } from '../../core/api/types';
+import { Booking, BookingRequest } from './types';
 
 export class BookingsApi {
   private static readonly PATH = 'bookings';
