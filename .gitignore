@@ -1,9 +1,12 @@
 
 # Playwright
 node_modules/
-.env
+.env.*
+!.env.example
 auth-states/*
 !auth-states/.gitkeep
 playwright-report/
 test-results/
 reports/
+allure-results/
+allure-report/
