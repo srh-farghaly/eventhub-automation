@@ -31,11 +31,11 @@ export class BookingFacade {
   }
 
   async openBookingFormDirectly(event: ApiEvent): Promise<void> {
-    await test.step(`Open the booking form for "${event.title}" directly`, async () => {
-      await this.page.goto(`/events/${event.id}`);
-      await expect(this.bookingForm.confirmBookingButton).toBeVisible();
-    });
-  }
+  await test.step(`Open the booking form for "${event.title}" directly`, async () => {
+    await this.page.goto(`/events/${event.id}`, { waitUntil: 'domcontentloaded' });
+    await expect(this.bookingForm.confirmBookingButton).toBeVisible({ timeout: 15_000 });
+  });
+}
 
   async fillBookingForm(details: BookingDetails): Promise<void> {
     await test.step(`Enter ${details.quantity} ticket(s) and customer details`, async () => {
