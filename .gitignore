@@ -8,5 +8,3 @@ auth-states/*
 playwright-report/
 test-results/
 reports/
-allure-results/
-allure-report/

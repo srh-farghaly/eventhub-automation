@@ -13,11 +13,6 @@ const reporters: ReporterDescription[] = process.env.CI
       ['html', { open: 'on-failure' }],                  
     ];
 
-
-if (process.env.ALLURE === 'true') {
-  reporters.push(['allure-playwright']);
-}
-
 export default defineConfig({
   testDir: './tests',
   fullyParallel: true,
