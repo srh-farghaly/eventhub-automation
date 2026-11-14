@@ -35,7 +35,7 @@ export class BookingsApi {
   }
 
   async cancel(id: number): Promise<APIResponse> {
-    return this.api.delete(`${BookingsApi.PATH}/${id}`);
+    return this.api.delete(`${BookingsApi.PATH}/${id}`, { maxRetries: 3 });
   }
 
   // For bookings created through the UI: we only know the reference.
@@ -62,7 +62,9 @@ export class BookingsApi {
 
     for (const reference of this.createdReferences) {
       try {
-        const lookup = await this.api.get(`${BookingsApi.PATH}/ref/${reference}`);
+        const lookup = await this.api.get(`${BookingsApi.PATH}/ref/${reference}`, {
+          maxRetries: 3,
+        });
         if (lookup.status() === 404) continue;
         if (!lookup.ok()) {
           failures.push(`booking ref ${reference}: lookup returned ${lookup.status()}`);
