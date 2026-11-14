@@ -44,18 +44,51 @@ export class BookingsApi {
   }
 
   // Called by the fixture after each test.
+  // Tries every tracked booking, even if some fail, then throws ONE error listing the failures.
+  // A 404 is fine everywhere: the test may have cancelled the booking already.
   async cleanup(): Promise<void> {
+    const failures: string[] = [];
+
     for (const id of this.createdIds) {
-      await this.cancel(id); // a 404 is fine: the test may have cancelled it already
-    }
-    for (const reference of this.createdReferences) {
-      const response = await this.api.get(`${BookingsApi.PATH}/ref/${reference}`);
-      if (response.status() === 404) continue; // already cancelled by the test
-      if (!response.ok()) {
-        throw new Error(`Cleanup lookup failed for ${reference}: ${response.status()}`);
+      try {
+        const response = await this.cancel(id);
+        if (!response.ok() && response.status() !== 404) {
+          failures.push(`booking id ${id}: cancel returned ${response.status()}`);
+        }
+      } catch (error) {
+        failures.push(`booking id ${id}: ${BookingsApi.safeMessage(error)}`);
       }
-      const body: ApiResponse<Booking> = await response.json();
-      await this.cancel(body.data.id);
     }
+
+    for (const reference of this.createdReferences) {
+      try {
+        const lookup = await this.api.get(`${BookingsApi.PATH}/ref/${reference}`);
+        if (lookup.status() === 404) continue;
+        if (!lookup.ok()) {
+          failures.push(`booking ref ${reference}: lookup returned ${lookup.status()}`);
+          continue;
+        }
+        const body: ApiResponse<Booking> = await lookup.json();
+        const response = await this.cancel(body.data.id);
+        if (!response.ok() && response.status() !== 404) {
+          failures.push(`booking ref ${reference}: cancel returned ${response.status()}`);
+        }
+      } catch (error) {
+        failures.push(`booking ref ${reference}: ${BookingsApi.safeMessage(error)}`);
+      }
+    }
+
+    if (failures.length > 0) {
+      throw new Error(
+        `Booking cleanup failed for ${failures.length} item(s):\n- ${failures.join('\n- ')}`
+      );
+    }
+  }
+
+  // Playwright request errors include a call log with the request headers (and the
+  // Authorization token). Keep only the first line and mask any bearer token.
+  private static safeMessage(error: unknown): string {
+    const message = error instanceof Error ? error.message : String(error);
+    return message.split('\n')[0].replace(/Bearer\s+\S+/gi, 'Bearer [redacted]');
   }
 }
