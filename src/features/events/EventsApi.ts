@@ -7,8 +7,11 @@ export class EventsApi {
 
   constructor(private readonly api: APIRequestContext) {}
 
-  async list(limit = 50): Promise<ApiEvent[]> {
-    const response = await this.api.get(EventsApi.PATH, { params: { limit } });
+  /** Lists events. Without a limit, the API's own default page size is used. */
+  async list(limit?: number): Promise<ApiEvent[]> {
+    const response = await this.api.get(EventsApi.PATH, {
+      params: limit !== undefined ? { limit } : undefined,
+    });
     if (!response.ok()) {
       throw new Error(`List events failed: ${response.status()} ${await response.text()}`);
     }
@@ -16,11 +19,9 @@ export class EventsApi {
     return body.data;
   }
 
-    async findBookableEvent(seatsNeeded = 1, limit = 50): Promise<ApiEvent> {
+  async findBookableEvent(seatsNeeded = 1, limit?: number): Promise<ApiEvent> {
     const events = await this.list(limit);
-    const withSeats = events.filter((e) => e.availableSeats >= seatsNeeded);
-    const upcoming = withSeats.find((e) => new Date(e.eventDate).getTime() > Date.now());
-    const event = upcoming ?? withSeats[0];
+    const event = events.find((e) => e.availableSeats >= seatsNeeded);
     if (!event) {
       throw new Error(`No event found with at least ${seatsNeeded} available seats`);
     }

@@ -1,5 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 
+
 export class EventsPage {
   constructor(private readonly page: Page) {}
 

@@ -1,14 +1,12 @@
 import fs from 'fs';
 import path from 'path';
 import { env } from '../config/env';
+import type { BrowserContext } from '@playwright/test';
 
 export const AUTH_FILE = path.join(process.cwd(), 'auth-states', 'user.json');
 const TOKEN_KEY = 'eventhub_token';
 
-interface SessionState {
-  cookies: unknown[];
-  origins: { origin: string; localStorage: { name: string; value: string }[] }[];
-}
+type SessionState = Awaited<ReturnType<BrowserContext['storageState']>>;
 
 export function saveSession(token: string, file: string = AUTH_FILE): void {
   const state: SessionState = {

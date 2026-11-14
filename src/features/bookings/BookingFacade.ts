@@ -23,12 +23,21 @@ export class BookingFacade {
     private readonly onBookingConfirmed: (reference: string) => void = () => {}
   ) {}
 
-  async fillBookingForm(event: ApiEvent, details: BookingDetails): Promise<void> {
-    await test.step(`Open the booking form for "${event.title}"`, async () => {
+  async openBookingFormFromList(event: ApiEvent): Promise<void> {
+    await test.step(`Open the booking form for "${event.title}" from the events list`, async () => {
       await this.page.goto('/events');
       await this.eventsPage.bookNowButton(event.title).click();
     });
+  }
 
+  async openBookingFormDirectly(event: ApiEvent): Promise<void> {
+    await test.step(`Open the booking form for "${event.title}" directly`, async () => {
+      await this.page.goto(`/events/${event.id}`);
+      await expect(this.bookingForm.confirmBookingButton).toBeVisible();
+    });
+  }
+
+  async fillBookingForm(details: BookingDetails): Promise<void> {
     await test.step(`Enter ${details.quantity} ticket(s) and customer details`, async () => {
       // the counter starts at 1, so click "+" (quantity - 1) times
       for (let i = 1; i < details.quantity; i++) {
@@ -52,7 +61,7 @@ export class BookingFacade {
       await this.bookingForm.confirmBookingButton.click();
       await expect(this.confirmation.bookingSuccessMessage).toBeVisible();
       const reference = (await this.confirmation.bookingReference.innerText()).trim();
-      this.onBookingConfirmed(reference); 
+      this.onBookingConfirmed(reference);
       return reference;
     });
   }
