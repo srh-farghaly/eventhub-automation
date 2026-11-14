@@ -1,4 +1,5 @@
 import { Locator, Page } from '@playwright/test';
+import { BookingFormMessages } from '../messages';
 
 export class BookingFormPage {
   readonly increaseQuantityButton: Locator;
@@ -9,11 +10,13 @@ export class BookingFormPage {
   readonly totalPrice: Locator;
   readonly confirmBookingButton: Locator;
   readonly ticketCount: Locator;
+  readonly nameError: Locator;
 
 
   constructor(page: Page) {
+    this.nameError = page.getByText(BookingFormMessages.nameTooShort);  
     this.increaseQuantityButton = page.getByRole('button', { name: '+' });
-    this.decreaseQuantityButton = page.getByRole('button',{name:'-'})
+    this.decreaseQuantityButton = page.getByRole('button', { name: '−' });  
     this.fullNameInput = page.locator('#customerName');
     this.emailInput = page.getByTestId('customer-email');
     this.phoneInput = page.locator('#phone');

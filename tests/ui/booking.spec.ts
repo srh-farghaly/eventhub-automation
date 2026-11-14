@@ -7,13 +7,14 @@ test.describe('US-114: Book tickets for an event', () => {
     eventsApi,
     bookingFacade,
   }) => {
-    const event = await eventsApi.findBookableEvent(3);
-    const details = buildBookingRequest(event.id, { quantity: 3 });
+    const quantity = 3; 
+    const event = await eventsApi.findBookableEvent(quantity);
+    const details = buildBookingRequest(event.id, { quantity });
 
     await bookingFacade.openBookingFormDirectly(event);
     await bookingFacade.fillBookingForm(details);
 
-    await bookingFacade.expectTotalOnForm(event, 3);
+    await bookingFacade.expectTotalOnForm(event, quantity);
   });
 
   test('AC1: booking shows a confirmation with reference and details', async ({
@@ -66,5 +67,16 @@ test.describe('US-114: Book tickets for an event', () => {
 
     await bookingFacade.openMyBookings();
     await bookingFacade.cancelBooking(booking.bookingRef);
+  });
+
+    test('AC1 (negative): a booking without a name is rejected', async ({ eventsApi, bookingFacade }) => {
+    const event = await eventsApi.findBookableEvent(1);
+    const details = buildBookingRequest(event.id, { customerName: '' });
+
+    await bookingFacade.openBookingFormDirectly(event);
+    await bookingFacade.fillBookingForm(details);
+    await bookingFacade.submitBooking();
+
+    await bookingFacade.expectNameRejected();
   });
 });

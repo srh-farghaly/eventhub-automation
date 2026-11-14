@@ -96,4 +96,17 @@ export class BookingFacade {
       await expect(this.myBookings.card(reference)).toHaveCount(0);
     });
   }
+
+async submitBooking(): Promise<void> {
+  await test.step('Click Confirm Booking', async () => {
+    await this.bookingForm.confirmBookingButton.click();
+  });
+}
+
+async expectNameRejected(): Promise<void> {
+  await test.step('Name is rejected and no booking is made', async () => {
+    await expect(this.bookingForm.nameError).toBeVisible();
+    await expect(this.confirmation.bookingSuccessMessage).toBeHidden();
+  });
+}
 }
