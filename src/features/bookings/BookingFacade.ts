@@ -50,7 +50,7 @@ export class BookingFacade {
   }
 
   async expectTotalOnForm(event: ApiEvent, quantity: number): Promise<void> {
-    const expected = Number(event.price) * quantity; // API price is a string (README D4)
+    const expected = Number(event.price) * quantity; // the API returns price as a string
     await expect
       .poll(async () => parseMoney(await this.bookingForm.totalPrice.innerText()))
       .toBe(expected);

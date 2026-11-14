@@ -7,7 +7,6 @@ export class EventsApi {
 
   constructor(private readonly api: APIRequestContext) {}
 
-  /** Lists events. Without a limit, the API's own default page size is used. */
   async list(limit?: number): Promise<ApiEvent[]> {
     const response = await this.api.get(EventsApi.PATH, {
       params: limit !== undefined ? { limit } : undefined,

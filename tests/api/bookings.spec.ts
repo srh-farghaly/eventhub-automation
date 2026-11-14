@@ -13,7 +13,7 @@ test.describe('US-114 (API): Book tickets for an event', () => {
 
     expect(booking.status).toBe('confirmed');
     expect(booking.bookingRef).toBeTruthy();
-    expect(Number(booking.totalPrice)).toBe(Number(event.price) * 2); // prices are strings (D4)
+    expect(Number(booking.totalPrice)).toBe(Number(event.price) * 2); // the API returns prices as strings
   });
 
   test('AC4: a cancelled booking can no longer be retrieved', async ({
